@@ -17,7 +17,7 @@ public class ArrayListStack<T> extends ArrayList implements StackADT {
 
     @Override
     public void push(Object t) {
-        this.add(t);
+        this.add((T) t);
     }
 
     @Override
@@ -33,8 +33,9 @@ public class ArrayListStack<T> extends ArrayList implements StackADT {
     }
 
     @Override
-    public Object peek() throws EmptyCollectionException {
+    public Object peek(){
         return this.get(this.size() - 1);
+
     }
 
 }
