@@ -5,6 +5,8 @@ import asset.Cheese;
 import asset.StaticMaze;
 import grid.Location;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -40,12 +42,7 @@ public class MouseTest {
             
             // Get peek if exists
             if (!mouse.getCrumbs().isEmpty()) {
-                try {
-                    crumbsTop = (Location) mouse.getCrumbs().peek();
-                }
-                catch (EmptyCollectionException e) {
-                    fail("Unexpected ECE - testMove");
-                }
+                crumbsTop = (Location) mouse.getCrumbs().peek();
             }
             
             mouse.act();
