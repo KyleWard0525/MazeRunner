@@ -128,14 +128,10 @@ public class Mouse extends AbstractMouse {
     @Override
     public boolean hasVisited(Location location) {
         boolean visited = false;
-        try {
             Location l = (Location) crumbs.peek();
             if (l == location) {
                 visited = true;
             }
-        } catch (EmptyCollectionException e) {
-            e.printStackTrace();
-        }
         return visited;
     }
 
