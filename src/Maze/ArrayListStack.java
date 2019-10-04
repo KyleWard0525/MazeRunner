@@ -17,18 +17,14 @@ public class ArrayListStack<T> extends ArrayList implements StackADT {
 
     @Override
     public void push(Object t) {
-        this.add((T) t);
+        this.add(t);
     }
 
     @Override
     public Object pop() {
         Object o = null;
-        try {
-            o = this.get(this.size() - 1);
-            this.remove(o);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        o = this.get(this.size() - 1);
+        this.remove(o);
         return o;
     }
 
