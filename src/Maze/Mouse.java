@@ -1,5 +1,6 @@
 package Maze;
 
+import DataStructures.EmptyCollectionException;
 import asset.AbstractMouse;
 import grid.Location;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class Mouse extends AbstractMouse {
      */
     public Mouse() {
         super();
-        crumbs = new ArrayListStack<>();
-        crumbs.add(getLocation());
+        crumbs = new ArrayListStack<Location>();
+        crumbs.push(getLocation());
     }
 
     /**
@@ -34,7 +35,7 @@ public class Mouse extends AbstractMouse {
      */
     @Override
     protected List<Location> getEmptyLocations() {
-        List<Location> emptyLocations = new ArrayList<>(4);
+        List<Location> emptyLocations = new ArrayList<Location>(4);
 
         // Create a list of locations adjacent to the mouse
         List<Location> adjacentLocations = getAdjacentLocations();
@@ -81,7 +82,7 @@ public class Mouse extends AbstractMouse {
         a new location to move to randomly.
         Otherwise, move to the last location visited and pop it from the crumbs.
          */
-
+        try{
         //Get the number of empty spaces
         for (Location l : emptyLocations) {
 
@@ -90,7 +91,7 @@ public class Mouse extends AbstractMouse {
 
                 //Check traverseability, add crumb, move.
                 if (canTraverse(l)) {
-                    crumbs.add(l);
+                    crumbs.push(l);
                     moveTo(l);
                 }
             } else {
@@ -144,6 +145,11 @@ public class Mouse extends AbstractMouse {
             }
         }
     }
+        catch(EmptyCollectionException ece)
+        {
+            ece.printStackTrace();
+        }
+    }
 
     /**
      * Determines whether the mouse has already visited this location.
@@ -154,7 +160,15 @@ public class Mouse extends AbstractMouse {
     @Override
     public boolean hasVisited(Location location) {
         boolean visited = false;
-        Location l = (Location) crumbs.peek();
+        Location l = null;
+        
+        try{
+        l = (Location) crumbs.peek();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
         if (l == location) {
             visited = true;
         }

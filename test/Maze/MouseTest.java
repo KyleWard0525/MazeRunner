@@ -40,9 +40,15 @@ public class MouseTest {
             List<Location> emptyLocations = mouse.getEmptyLocations();
             Location crumbsTop = null;
 
+            try{
             // Get peek if exists
             if (!mouse.getCrumbs().isEmpty()) {
                 crumbsTop = (Location) (mouse.getCrumbs().peek());
+            }
+            }
+            catch(EmptyCollectionException ece)
+            {
+                ece.printStackTrace();
             }
 
             mouse.act();
