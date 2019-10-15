@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * @author Paul Franklin
  */
 public class MouseTest {
-    
+
     private StaticMaze maze;
     private Mouse mouse;
     private final int TRAVERSABLE_EMPTY_LOCATIONS = 282;
@@ -35,29 +35,29 @@ public class MouseTest {
     @Test
     public void testMove() {
         for (int i = 0; i < 2 * TRAVERSABLE_EMPTY_LOCATIONS + 1; i++) {
-            
+
             int crumbsSize = mouse.getCrumbs().size();
             List<Location> emptyLocations = mouse.getEmptyLocations();
             Location crumbsTop = null;
-            
+
             // Get peek if exists
             if (!mouse.getCrumbs().isEmpty()) {
-                crumbsTop = (Location) mouse.getCrumbs().peek();
+                crumbsTop = (Location) (mouse.getCrumbs().peek());
             }
-            
+
             mouse.act();
-            
+
             if (mouse.hasFoundCheese()) {
                 break;
             }
-            
+
             // Case: Empty locations exist
             if (emptyLocations.size() > 0) {
                 //assertEquals(crumbsSize, mouse.getCrumbs().size());
                 assertTrue(emptyLocations.contains(mouse.getLocation()));
                 assertNotEquals(mouse.getLocation(), crumbsTop);
             }
-            
+
             // Case: No empty locations exist
             if (emptyLocations.isEmpty()) {
                 assertEquals(crumbsSize - 1, mouse.getCrumbs().size());
@@ -65,7 +65,7 @@ public class MouseTest {
                 assertEquals(mouse.getLocation(), crumbsTop);
             }
         }
-        
+
         assertTrue(mouse.hasFoundCheese());
     }
 

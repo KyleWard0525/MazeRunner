@@ -5,21 +5,29 @@
  */
 package Maze;
 
-import DataStructures.EmptyCollectionException;
 import DataStructures.StackADT;
 import java.util.ArrayList;
 
 /**
  *
  * @author Kyle Ward
+ * @param <T>
  */
 public class ArrayListStack<T> extends ArrayList implements StackADT {
 
+    /**
+     *
+     * @param t
+     */
     @Override
     public void push(Object t) {
         this.add(t);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object pop() {
         Object o = null;
@@ -28,8 +36,12 @@ public class ArrayListStack<T> extends ArrayList implements StackADT {
         return o;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public Object peek(){
+    public Object peek() {
         return this.get(this.size() - 1);
 
     }

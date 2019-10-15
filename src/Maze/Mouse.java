@@ -1,6 +1,5 @@
 package Maze;
 
-import DataStructures.*;
 import asset.AbstractMouse;
 import grid.Location;
 import java.util.ArrayList;
@@ -111,11 +110,38 @@ public class Mouse extends AbstractMouse {
             //Remove previous space
             crumbs.pop();
 
-            if (canTraverse((Location) crumbs.pop())) {
-                //Move back 2 spaces
-                moveTo((Location) crumbs.pop());
-            }
+            if (crumbs.size() - 1 >= 1) {
+                Location loc = (Location) crumbs.pop();
+                if (canTraverse(loc)) {
+                    //Move back 1 spaces
+                    try {
+                        if (seesCheeseAt(loc)) {
+                            moveTo(loc);
+                        } else if (seesRockAt(loc) || hasVisited(loc)) {
+                            loc = (Location) crumbs.peek();
+                        }
+                        moveTo(loc);
+                    } catch (Exception e) {
+                        System.out.println("Exception thrown in Mouse.java in move() method.");
+                        e.printStackTrace();
+                    }
+                } else {
+                    crumbs.pop();
+                    if (crumbs.size() > 0) {
+                        if (canTraverse((Location) crumbs.pop())) {
+                            //Move back 2 spaces
+                            moveTo((Location) crumbs.pop());
+                        }
+                    }
 
+                }
+            } else {
+                Location loc = (Location) crumbs.peek();
+
+                if (canTraverse(loc)) {
+                    moveTo(loc);
+                }
+            }
         }
     }
 
@@ -128,10 +154,10 @@ public class Mouse extends AbstractMouse {
     @Override
     public boolean hasVisited(Location location) {
         boolean visited = false;
-            Location l = (Location) crumbs.peek();
-            if (l == location) {
-                visited = true;
-            }
+        Location l = (Location) crumbs.peek();
+        if (l == location) {
+            visited = true;
+        }
         return visited;
     }
 
