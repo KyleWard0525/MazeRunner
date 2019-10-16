@@ -36,21 +36,38 @@ public class ArrayListStack<T> implements StackADT {
      */
     @Override
     public T pop() throws EmptyCollectionException{
+        T o = list.get(list.size()- 1);
         
-        T o = list.get(list.size() - 1);
-        list.remove(o);
+        if(list.size() > 0)
+        {
+         o = list.get(list.size()- 1);
+         list.remove(o);
+        }
+        
+        if(list.size() <= 0)
+        {
+            o = list.get(list.size());
+            list.remove(o);
+        }
         return o;
     }
 
     /**
-     *
      * @return
      * @throws DataStructures.EmptyCollectionException
      */
     @Override
     public T peek() throws EmptyCollectionException{
-        T o = list.get(list.size() - 1);
+        T o = list.get(list.size()- 1);
+        if(list.size() > 0)
+        {
+         o = list.get(list.size()- 1);
+        }
         
+        if(list.size() <= 0)
+        {
+            o = list.get(list.size());
+        }
         return o;
     }
 
