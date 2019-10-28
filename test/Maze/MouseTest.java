@@ -5,14 +5,13 @@ import asset.Cheese;
 import asset.StaticMaze;
 import grid.Location;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
  * @author Paul Franklin
+ * @version 1.0
  */
 public class MouseTest {
 
@@ -40,14 +39,12 @@ public class MouseTest {
             List<Location> emptyLocations = mouse.getEmptyLocations();
             Location crumbsTop = null;
 
-            try{
-            // Get peek if exists
-            if (!mouse.getCrumbs().isEmpty()) {
-                crumbsTop = (Location) (mouse.getCrumbs().peek());
-            }
-            }
-            catch(EmptyCollectionException ece)
-            {
+            try {
+                // Get peek if exists
+                if (!mouse.getCrumbs().isEmpty()) {
+                    crumbsTop = (Location) (mouse.getCrumbs().peek());
+                }
+            } catch (EmptyCollectionException ece) {
                 ece.printStackTrace();
             }
 
