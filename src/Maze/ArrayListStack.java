@@ -7,82 +7,81 @@ package Maze;
 
 import DataStructures.EmptyCollectionException;
 import DataStructures.StackADT;
-import grid.Location;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author Kyle Ward
+ * @author kward60
+ * @version 1.0
  * @param <T>
  */
 public class ArrayListStack<T> implements StackADT {
 
-    private ArrayList<T> list = new ArrayList<T>();
-    
+    private ArrayList<T> list = new ArrayList<>();
+
     /**
      *
      * @param t
      */
     @Override
     public void push(Object t) {
-        list.add((T)t);
+        list.add((T) t);
+    }
+
+    /**
+     *
+     * @return @throws DataStructures.EmptyCollectionException
+     */
+    @Override
+    public T pop() throws EmptyCollectionException {
+        if (list.size() <= 0) {
+            throw new EmptyCollectionException("stack");
+        } else {
+            T o = list.get(list.size() - 1);
+            list.remove(o);
+
+            return o;
+        }
+    }
+
+    /**
+     * @return @throws DataStructures.EmptyCollectionException
+     */
+    @Override
+    public T peek() throws EmptyCollectionException {
+        if (list.size() <= 0) {
+            throw new EmptyCollectionException("stack");
+        } else {
+            T o = list.get(list.size() - 1);
+            return o;
+        }
     }
 
     /**
      *
      * @return
-     * @throws DataStructures.EmptyCollectionException
      */
     @Override
-    public T pop() throws EmptyCollectionException{
-        T o = list.get(list.size()- 1);
-        
-        if(list.size() > 0)
-        {
-         o = list.get(list.size()- 1);
-         list.remove(o);
-        }
-        
-        if(list.size() <= 0)
-        {
-            o = list.get(list.size());
-            list.remove(o);
-        }
-        return o;
+    public boolean isEmpty() {
+        return list.isEmpty();
     }
 
     /**
+     *
      * @return
-     * @throws DataStructures.EmptyCollectionException
      */
-    @Override
-    public T peek() throws EmptyCollectionException{
-        T o = list.get(list.size()- 1);
-        if(list.size() > 0)
-        {
-         o = list.get(list.size()- 1);
-        }
-        
-        if(list.size() <= 0)
-        {
-            o = list.get(list.size());
-        }
-        return o;
-    }
-
-    @Override
-    public boolean isEmpty() {
-         return list.isEmpty();
-    }
-
     @Override
     public int size() {
         return list.size();
     }
 
-    boolean contains(T t) {
+    /**
+     *
+     * @param t - the object to search for
+     * @return true or false
+     */
+    public boolean contains(T t) {
         return list.contains(t);
     }
-    
+
 }
