@@ -6,6 +6,11 @@ import grid.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author kward60
+ * @version 1.0
+ */
 public class Mouse extends AbstractMouse {
 
     private ArrayListStack<Location> crumbs;
@@ -82,73 +87,99 @@ public class Mouse extends AbstractMouse {
         a new location to move to randomly.
         Otherwise, move to the last location visited and pop it from the crumbs.
          */
-        try{
-        //Get the number of empty spaces
-        for (Location l : emptyLocations) {
 
-            //Check that the space has not been visited
-            if (!crumbs.contains(l)) {
+ /*
+        //Boring random algorithm
+        try {
 
-                //Check traverseability, add crumb, move.
-                if (canTraverse(l)) {
-                    crumbs.push(l);
-                    moveTo(l);
-                }
+            //Check number of empty locations
+            if (emptyLocations.size() <= 0) {
+                //Move to previous spot
+                moveTo(crumbs.pop());
             } else {
-                Location prev = (Location) crumbs.pop();
+                //Add location
+                crumbs.push(getLocation());
 
-                //Move to previous space
-                if (canTraverse(prev)) {
-                    moveTo(prev);
+                //Move to random empty spot
+                moveTo(emptyLocations.get((int) (Math.random() * emptyLocations.size() - 1)));
+            }
+        } catch (EmptyCollectionException ece) {
+            System.out.println("Empty Collection Exception thrown in Mouse.move() method");
+        }
+         */
+
+ /*
+         * This is an algorithm to solve a maze of any size first try using
+         * logic
+         */
+        try {
+
+            //Get the number of empty spaces 
+            for (Location l : emptyLocations) {
+
+                //Check that the space has not been visited 
+                if (!crumbs.contains(l)) {
+
+                    //Check traverseability, add crumb, move. 
+                    if (canTraverse(l)) {
+                        crumbs.push(l);
+                        moveTo(l);
+                    } else {
+                        Location prev = (Location) crumbs.pop();
+
+                        //Move to previous space 
+                        if (canTraverse(prev)) {
+                            moveTo(prev);
+                        }
+
+                        return;
+                    }
                 }
 
-                return;
-            }
-        }
-
-        //If all adjacent spaces have been traversed
-        if (emptyLocations.isEmpty()) {
-            //Remove previous space
-            crumbs.pop();
-
-            if (crumbs.size() - 1 >= 1) {
-                Location loc = (Location) crumbs.pop();
-                if (canTraverse(loc)) {
-                    //Move back 1 spaces
-                    try {
-                        if (seesCheeseAt(loc)) {
-                            moveTo(loc);
-                        } else if (seesRockAt(loc) || hasVisited(loc)) {
-                            loc = (Location) crumbs.peek();
-                        }
-                        moveTo(loc);
-                    } catch (Exception e) {
-                        System.out.println("Exception thrown in Mouse.java in move() method.");
-                        e.printStackTrace();
-                    }
-                } else {
+                //If all adjacent spaces have been traversed 
+                if (emptyLocations.isEmpty()) {
+                    //Remove previous space 
                     crumbs.pop();
-                    if (crumbs.size() > 0) {
-                        if (canTraverse((Location) crumbs.pop())) {
-                            //Move back 2 spaces
-                            moveTo((Location) crumbs.pop());
+
+                    if (crumbs.size() - 1 >= 1) {
+                        Location loc = (Location) crumbs.pop();
+
+                        if (canTraverse(loc)) {
+                            //Move back 1 spaces 
+                            try {
+                                if (seesCheeseAt(loc)) {
+                                    moveTo(loc);
+                                } else if (seesRockAt(loc) || hasVisited(loc)) {
+                                    loc = (Location) crumbs.peek();
+                                }
+                                moveTo(loc);
+                            } catch (Exception e) {
+                                System.out.println("Exception thrown in Mouse.java in move() method.");
+                                e.printStackTrace();
+                            }
+                        } else {
+                            crumbs.pop();
+                            if (crumbs.size() > 0) {
+                                if (canTraverse((Location) crumbs.pop())) {
+                                    //Move back 2 spaces 
+                                    moveTo((Location) crumbs.pop());
+                                }
+                            }
+
+                        }
+                    } else {
+                        Location loc = (Location) crumbs.peek();
+
+                        if (canTraverse(loc)) {
+                            moveTo(loc);
                         }
                     }
-
-                }
-            } else {
-                Location loc = (Location) crumbs.peek();
-
-                if (canTraverse(loc)) {
-                    moveTo(loc);
                 }
             }
-        }
-    }
-        catch(EmptyCollectionException ece)
-        {
+        } catch (EmptyCollectionException ece) {
             ece.printStackTrace();
         }
+
     }
 
     /**
@@ -161,12 +192,10 @@ public class Mouse extends AbstractMouse {
     public boolean hasVisited(Location location) {
         boolean visited = false;
         Location l = null;
-        
-        try{
-        l = (Location) crumbs.peek();
-        }
-        catch(Exception e)
-        {
+
+        try {
+            l = (Location) crumbs.peek();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (l == location) {
